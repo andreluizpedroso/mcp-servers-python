@@ -1,4 +1,4 @@
-# Estudo-MCP — Model Context Protocol na Prática
+# Estudo-MCP — Model Context Protocol in Practice
 
 ![Sprint](https://img.shields.io/badge/Sprints-8%2F8-success)
 ![Python](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white)
@@ -6,88 +6,90 @@
 ![uv](https://img.shields.io/badge/uv-package%20manager-DE5FE9?logo=uv&logoColor=white)
 ![Pytest](https://img.shields.io/badge/pytest-tested-0A9EDC?logo=pytest&logoColor=white)
 
-Estudo guiado e prático do **Model Context Protocol (MCP)**, construído do zero em 8 sprints incrementais. Cada sprint entrega um MCP Server funcional e testado — não apenas exemplos de documentação — cobrindo o protocolo inteiro: Tools, Resources, Prompts, Sampling, Roots, transporte remoto e autenticação.
+🇧🇷 [Leia em português](README.pt-BR.md)
+
+A guided, hands-on study of the **Model Context Protocol (MCP)**, built from scratch over 8 incremental sprints. Each sprint delivers a working, tested MCP Server — not just documentation examples — covering the entire protocol: Tools, Resources, Prompts, Sampling, Roots, remote transport and authentication.
 
 ---
 
-## Sumário
+## Table of Contents
 
-- [Sobre o projeto](#sobre-o-projeto)
-- [Progresso das sprints](#progresso-das-sprints)
-- [O que foi construído](#o-que-foi-construído)
-- [Bugs reais encontrados pelo caminho](#bugs-reais-encontrados-pelo-caminho)
-- [Estrutura do repositório](#estrutura-do-repositório)
-- [Como rodar](#como-rodar)
-- [Metodologia](#metodologia)
-- [Referências](#referências)
-
----
-
-## Sobre o projeto
-
-O [Model Context Protocol](https://github.com/modelcontextprotocol) é o padrão aberto que permite que aplicações de IA (Hosts) se conectem, de forma uniforme, a ferramentas e fontes de dados externas (Servers) — eliminando a necessidade de uma integração proprietária para cada combinação de aplicação × ferramenta.
-
-Este repositório documenta um estudo do zero do MCP, indo além da leitura da especificação: cada sprint produz um **server MCP real, com testes automatizados e validação de ponta a ponta** (via `ClientSession` real, MCP Inspector, ou ambos), cobrindo progressivamente:
-
-`Tools` → `Resources & Prompts` → `Inspeção/debug` → `Client customizado` → `Sampling & Roots` → `Transporte HTTP + Auth` → `Projeto final`
+- [About the Project](#about-the-project)
+- [Sprint Progress](#sprint-progress)
+- [What Was Built](#what-was-built)
+- [Real Bugs Found Along the Way](#real-bugs-found-along-the-way)
+- [Repository Structure](#repository-structure)
+- [How to Run](#how-to-run)
+- [Methodology](#methodology)
+- [References](#references)
 
 ---
 
-## Progresso das Sprints
+## About the Project
 
-| # | Sprint | Entregável | Status |
+The [Model Context Protocol](https://github.com/modelcontextprotocol) is the open standard that lets AI applications (Hosts) connect to external tools and data sources (Servers) in a uniform way — removing the need for a proprietary integration for every application × tool combination.
+
+This repository documents a from-scratch study of MCP that goes beyond reading the specification: each sprint produces a **real MCP server, with automated tests and end-to-end validation** (via a real `ClientSession`, MCP Inspector, or both), progressively covering:
+
+`Tools` → `Resources & Prompts` → `Inspection/debugging` → `Custom Client` → `Sampling & Roots` → `HTTP Transport + Auth` → `Final project`
+
+---
+
+## Sprint Progress
+
+| # | Sprint | Deliverable | Status |
 |---|--------|------------|:---:|
-| 1 | [Fundamentos do MCP + setup do ambiente](docs/sprints/sprint-01.md) | Ambiente `uv` + SDK oficial validado | ✅ |
-| 2 | [Primeiro MCP Server — Tools](docs/sprints/sprint-02.md) | Gerenciador de tarefas ([`servers/sprint-02-tools-server`](servers/sprint-02-tools-server)) | ✅ |
-| 3 | [Resources & Prompts](docs/sprints/sprint-03.md) | Biblioteca de notas ([`servers/sprint-03-resources-prompts`](servers/sprint-03-resources-prompts)) | ✅ |
-| 4 | [Testando com MCP Inspector](docs/sprints/sprint-04.md) | Validação visual e via `--cli` | ✅ |
-| 5 | [Client MCP customizado + Host real](docs/sprints/sprint-05.md) | Client genérico ([`servers/sprint-05-custom-client`](servers/sprint-05-custom-client)) | ✅ |
-| 6 | [Sampling & Roots](docs/sprints/sprint-06.md) | Server com as duas primitivas ([`servers/sprint-06-sampling-roots`](servers/sprint-06-sampling-roots)) | ✅ |
-| 7 | [Transporte HTTP + Autenticação](docs/sprints/sprint-07.md) | Server `streamable-http` com Bearer token ([`servers/sprint-07-http-auth`](servers/sprint-07-http-auth)) | ✅ |
-| 8 | [Projeto final](docs/sprints/sprint-08.md) | Assistente de repositório Git ([`servers/sprint-08-final-project`](servers/sprint-08-final-project)) | ✅ |
+| 1 | [MCP fundamentals + environment setup](docs/sprints/sprint-01.md) | `uv` environment + validated official SDK | ✅ |
+| 2 | [First MCP Server — Tools](docs/sprints/sprint-02.md) | Task manager ([`servers/sprint-02-tools-server`](servers/sprint-02-tools-server)) | ✅ |
+| 3 | [Resources & Prompts](docs/sprints/sprint-03.md) | Notes library ([`servers/sprint-03-resources-prompts`](servers/sprint-03-resources-prompts)) | ✅ |
+| 4 | [Testing with MCP Inspector](docs/sprints/sprint-04.md) | Visual and `--cli` validation | ✅ |
+| 5 | [Custom MCP Client + real Host](docs/sprints/sprint-05.md) | Generic client ([`servers/sprint-05-custom-client`](servers/sprint-05-custom-client)) | ✅ |
+| 6 | [Sampling & Roots](docs/sprints/sprint-06.md) | Server implementing both primitives ([`servers/sprint-06-sampling-roots`](servers/sprint-06-sampling-roots)) | ✅ |
+| 7 | [HTTP Transport + Authentication](docs/sprints/sprint-07.md) | `streamable-http` server with Bearer token ([`servers/sprint-07-http-auth`](servers/sprint-07-http-auth)) | ✅ |
+| 8 | [Final project](docs/sprints/sprint-08.md) | Git repository assistant ([`servers/sprint-08-final-project`](servers/sprint-08-final-project)) | ✅ |
 
-Cada sprint em `docs/sprints/` segue um formato fixo: **objetivo, conceitos ensinados, decisões arquiteturais, perguntas de validação, code review (com nota) e perguntas de entrevista** — ver [Metodologia](#metodologia).
+Each sprint in `docs/sprints/` follows a fixed format: **objective, concepts taught, architectural decisions, validation questions, code review (with a grade) and interview questions** — see [Methodology](#methodology).
 
 ---
 
-## O que foi construído
+## What Was Built
 
-| Server | Primitivas MCP | Ponto forte |
+| Server | MCP primitives | Highlight |
 |---|---|---|
-| `sprint-02-tools-server` | Tools | 4 Tools com estado em memória, testes unitários + smoke test via Client real |
-| `sprint-03-resources-prompts` | Resources (estática + template) e Prompts | Duas formas de retorno de Prompt (`str` e `list[Message]`) |
-| `sprint-05-custom-client` | Client genérico | Funciona contra qualquer server `stdio`; 4 ações (list/call/read/prompt) |
-| `sprint-06-sampling-roots` | Sampling e Roots | Round-trip Server → Client → Server validado com callbacks stub |
-| `sprint-07-http-auth` | Transporte HTTP + Auth | `TokenVerifier` customizado, testado com token ausente/inválido/válido |
-| `sprint-08-final-project` | Tools + Resources + Prompts | Assistente de repositório Git, testado contra o histórico real deste repo |
+| `sprint-02-tools-server` | Tools | 4 Tools with in-memory state, unit tests + smoke test via a real Client |
+| `sprint-03-resources-prompts` | Resources (static + template) and Prompts | Two Prompt return forms (`str` and `list[Message]`) |
+| `sprint-05-custom-client` | Generic Client | Works against any `stdio` server; 4 actions (list/call/read/prompt) |
+| `sprint-06-sampling-roots` | Sampling and Roots | Server → Client → Server round trip validated with stub callbacks |
+| `sprint-07-http-auth` | HTTP Transport + Auth | Custom `TokenVerifier`, tested with missing/invalid/valid tokens |
+| `sprint-08-final-project` | Tools + Resources + Prompts | Git repository assistant, tested against this repo's real history |
 
-Todos os servers são construídos com o [SDK oficial em Python](https://github.com/modelcontextprotocol/python-sdk) (`FastMCP`) e têm suíte de testes própria (`uv run pytest`).
+All servers are built with the [official Python SDK](https://github.com/modelcontextprotocol/python-sdk) (`FastMCP`) and have their own test suite (`uv run pytest`).
 
 ---
 
-## Bugs Reais Encontrados pelo Caminho
+## Real Bugs Found Along the Way
 
-Construir os exercícios contra Clients reais (não só ler a documentação) expôs problemas concretos, corrigidos durante o próprio desenvolvimento:
+Building the exercises against real Clients (rather than only reading the documentation) surfaced concrete problems, which were fixed during development:
 
-| Sprint | Bug | Causa | Correção |
+| Sprint | Bug | Cause | Fix |
 |---|---|---|---|
-| [5](docs/sprints/sprint-05.md) | Traceback ao propagar erro de Tool | `SystemExit` levantado dentro de `async with` quebra o cleanup do `anyio.TaskGroup` | Retornar exit code e só chamar `SystemExit` fora do escopo assíncrono |
-| [7](docs/sprints/sprint-07.md) | `DeprecationWarning` silencioso | API de client HTTP trocada (`streamablehttp_client` → `streamable_http_client`) | Migração para a API atual, com `httpx.AsyncClient` explícito |
-| [7](docs/sprints/sprint-07.md) | Processo órfão segurando a porta | `uv run` no Windows spawna um processo filho que sobrevive a `Popen.terminate()` | `taskkill /PID <pid> /T /F` (mata a árvore de processos) |
-| [8](docs/sprints/sprint-08.md) | `git log`/`git show` travando indefinidamente | Subprocesso do `git` herdava o `stdin` do server, que em `stdio` é o pipe do protocolo MCP | `stdin=subprocess.DEVNULL` explícito em todo `subprocess.run` |
-| [8](docs/sprints/sprint-08.md) | Resource template não casava com caminhos aninhados | O SDK gera `[^/]+` para cada `{param}` — não aceita `/` | Barras codificadas como `%2F` no URI, decodificadas no Server |
+| [5](docs/sprints/sprint-05.md) | Traceback when propagating a Tool error | `SystemExit` raised inside `async with` breaks the `anyio.TaskGroup` cleanup | Return the exit code and call `SystemExit` only outside the async scope |
+| [7](docs/sprints/sprint-07.md) | Silent `DeprecationWarning` | HTTP client API was renamed (`streamablehttp_client` → `streamable_http_client`) | Migrated to the current API, with an explicit `httpx.AsyncClient` |
+| [7](docs/sprints/sprint-07.md) | Orphan process holding the port | `uv run` on Windows spawns a child process that survives `Popen.terminate()` | `taskkill /PID <pid> /T /F` (kills the whole process tree) |
+| [8](docs/sprints/sprint-08.md) | `git log`/`git show` hanging indefinitely | The `git` subprocess inherited the server's `stdin`, which under `stdio` is the MCP protocol pipe | Explicit `stdin=subprocess.DEVNULL` on every `subprocess.run` |
+| [8](docs/sprints/sprint-08.md) | Resource template not matching nested paths | The SDK generates `[^/]+` for each `{param}` — it does not accept `/` | Slashes encoded as `%2F` in the URI, decoded in the Server |
 
 ---
 
-## Estrutura do Repositório
+## Repository Structure
 
 ```
 MCP/
 ├── README.md
 ├── docs/
-│   └── sprints/                        # 1 documento por sprint
+│   └── sprints/                        # 1 document per sprint
 │       ├── sprint-01.md … sprint-08.md
-└── servers/                             # 1 projeto uv independente por sprint
+└── servers/                             # 1 independent uv project per sprint
     ├── sprint-01-hello-mcp/
     ├── sprint-02-tools-server/
     ├── sprint-03-resources-prompts/
@@ -97,29 +99,29 @@ MCP/
     └── sprint-08-final-project/
 ```
 
-Cada pasta em `servers/` é um projeto [`uv`](https://docs.astral.sh/uv/) autocontido, com seu próprio `pyproject.toml`, `uv.lock` e ambiente virtual — sem dependências compartilhadas entre sprints.
+Each folder in `servers/` is a self-contained [`uv`](https://docs.astral.sh/uv/) project with its own `pyproject.toml`, `uv.lock` and virtual environment — no dependencies are shared between sprints.
 
 ---
 
-## Como Rodar
+## How to Run
 
-Pré-requisitos: [`uv`](https://docs.astral.sh/uv/) instalado (resolve a versão do Python automaticamente).
+Prerequisite: [`uv`](https://docs.astral.sh/uv/) installed (it resolves the Python version automatically).
 
 ```bash
-# Entrar no projeto de uma sprint especifica
+# Enter a specific sprint's project
 cd servers/sprint-02-tools-server
 
-# Instalar dependencias
+# Install dependencies
 uv sync
 
-# Rodar os testes
+# Run the tests
 uv run pytest -v
 
-# Subir o server (transporte stdio, ou streamable-http na Sprint 7)
+# Start the server (stdio transport, or streamable-http in Sprint 7)
 uv run server.py
 ```
 
-Para explorar um server interativamente sem escrever código de Client, use o [MCP Inspector](https://github.com/modelcontextprotocol/inspector) (ver Sprint 4):
+To explore a server interactively without writing Client code, use the [MCP Inspector](https://github.com/modelcontextprotocol/inspector) (see Sprint 4):
 
 ```bash
 npx @modelcontextprotocol/inspector uv run server.py
@@ -127,22 +129,22 @@ npx @modelcontextprotocol/inspector uv run server.py
 
 ---
 
-## Metodologia
+## Methodology
 
-Cada sprint em `docs/sprints/` segue a mesma estrutura:
+Each sprint in `docs/sprints/` follows the same structure:
 
-1. **Objetivo** — o que a sprint entrega
-2. **Conceitos ensinados** — o que precisa ser entendido antes do exercício
-3. **Decisões arquiteturais** — escolhas de design, com alternativas descartadas e motivo
-4. **Perguntas de validação** — verificam entendimento conceitual, respondidas com as próprias palavras
-5. **Code review** — nota e feedback concreto sobre o código produzido na sprint
-6. **Perguntas de entrevista** — perguntas no estilo de entrevista técnica, com nota e gaps apontados
+1. **Objective** — what the sprint delivers
+2. **Concepts taught** — what needs to be understood before the exercise
+3. **Architectural decisions** — design choices, with discarded alternatives and the reasoning
+4. **Validation questions** — check conceptual understanding, answered in my own words
+5. **Code review** — grade and concrete feedback on the code produced in the sprint
+6. **Interview questions** — technical-interview-style questions, with a grade and identified gaps
 
 ---
 
-## Referências
+## References
 
-- [Model Context Protocol — especificação e SDKs oficiais](https://github.com/modelcontextprotocol)
+- [Model Context Protocol — specification and official SDKs](https://github.com/modelcontextprotocol)
 - [MCP Python SDK](https://github.com/modelcontextprotocol/python-sdk)
 - [MCP Inspector](https://github.com/modelcontextprotocol/inspector)
-- [uv — gerenciador de projetos Python](https://docs.astral.sh/uv/)
+- [uv — Python project manager](https://docs.astral.sh/uv/)
